@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "publish-item": "/components/posts-item/publish"
+  }
+}

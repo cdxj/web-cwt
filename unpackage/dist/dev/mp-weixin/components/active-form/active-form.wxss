@@ -1,0 +1,140 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* uni.scss */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.active-form.data-v-3fc7555c {
+  min-height: 200px;
+}
+.active-form .plaClass.data-v-3fc7555c {
+  text-align: right;
+  font-size: 26rpx;
+}
+.active-form .select-icon.data-v-3fc7555c {
+  float: right;
+  border-bottom: 2rpx solid #999;
+  border-right: 2rpx solid #999;
+  width: 16rpx;
+  height: 16rpx;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+  margin-right: 10rpx;
+}
+.active-form .form-box.data-v-3fc7555c {
+  width: 100%;
+  box-sizing: border-box;
+}
+.active-form .colorRed.data-v-3fc7555c {
+  color: red;
+  padding: 0 10rpx;
+}
+.active-form .line-right.data-v-3fc7555c {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+.active-form .line-bottom-select.data-v-3fc7555c {
+  padding-top: 40rpx;
+}
+.active-form .line-bottom-textarea.data-v-3fc7555c {
+  padding-top: 20rpx;
+}
+.active-form .line-bottom-textarea textarea.data-v-3fc7555c {
+  min-height: 100rpx;
+}
+.active-form .line-left.data-v-3fc7555c {
+  display: flex;
+  min-width: 22%;
+  align-items: center;
+  height: 100%;
+  letter-spacing: 0.5px;
+  font-size: 26rpx;
+  color: #000000;
+  box-sizing: border-box;
+}
+.active-form .p-l14.data-v-3fc7555c {
+  padding-left: 34rpx;
+}
+.active-form .textarea-box.data-v-3fc7555c {
+  width: 100%;
+  border-bottom: 1px solid #ededed;
+  padding-top: 20rpx;
+  font-size: 26rpx;
+}
+.active-form .textarea-box textarea.data-v-3fc7555c {
+  padding-left: 32rpx;
+  height: 100rpx;
+  font-size: 25rpx;
+  color: #333;
+}
+.active-form .line.data-v-3fc7555c {
+  padding: 27rpx 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+  border-bottom: 1px solid #ededed;
+  overflow: hidden;
+}
+.active-form .line .input.data-v-3fc7555c {
+  padding-right: 20rpx;
+  height: 100%;
+  width: 100%;
+  text-align: left;
+  font-size: 28rpx;
+  color: #333;
+  border: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  outline: none;
+}
+.active-form .line-col.data-v-3fc7555c {
+  padding: 27rpx 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+  border-bottom: 1px solid #ededed;
+  overflow: hidden;
+}
+.active-form .line-col .input.data-v-3fc7555c {
+  padding-right: 20rpx;
+  height: 100%;
+  width: 100%;
+  text-align: left;
+  font-size: 28rpx;
+  color: #333;
+  border: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  outline: none;
+}
+.active-form .num.data-v-3fc7555c {
+  margin-right: 8rpx;
+}
+

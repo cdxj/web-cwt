@@ -1,0 +1,223 @@
+{
+	"pages": [
+		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+		    "path" : "pages/index/index",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "",
+				 "navigationStyle":"custom",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/search/search",
+		    "style": {
+		    	 "navigationStyle":"custom",
+		    	"enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+			"path": "pages/tabbar/tabbar-1/tabbar-1",
+			"style": {
+				"navigationBarTitleText": "",
+				 "navigationStyle":"custom",
+				"enablePullDownRefresh":true
+				// "onReachBottomDistance":50
+			}
+		},
+		{
+			"path": "pages/tabbar/tabbar-2/tabbar-2",
+			"style": {
+				"navigationBarTitleText": "收藏列表",
+				 "navigationStyle":"custom",
+				"enablePullDownRefresh": false,
+				"onReachBottomDistance": 50
+			}
+		},
+		{
+			"path": "pages/tabbar/tabbar-3/tabbar-3",
+			"style": {
+				 "navigationStyle":"custom"
+			}
+		},
+		{
+			"path": "pages/cunwutong/cunwutong",
+			"style": {
+			    "navigationBarTitleText": "百宝乡",
+			    "app-plus": {
+			        "titleNView": {
+			            "type": "transparent"
+			        }
+			    }
+			}
+		},
+		{
+			"path": "pages/tabbar/tabbar-4/tabbar-4",
+			"style": {
+				 "navigationStyle":"custom"
+			}
+		},
+		{
+			"path": "pages/tabbar/tabbar-5/tabbar-5",
+			"style": {
+				"navigationBarTitleText": "个人中心",
+				 "navigationStyle":"custom"
+			}
+		},
+		{
+			"path": "pages/tabbar-3-detial/tabbar-3-release/tabbar-3-release",
+			"style": {}
+		},
+		{
+			"path": "pages/tabbar-3-detial/tabbar-3-video/tabbar-3-video",
+			"style": {
+				"navigationStyle":"custom"
+			}
+		},
+		{
+			"path": "pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa",
+			"style": {
+				"navigationStyle":"custom"
+			}
+		},
+		{
+		    "path" : "pages/list2detail-detail/list2detail-detail",
+		    "style": {
+		        "navigationBarTitleText": "详情",
+		        "app-plus": {
+		            "titleNView": {
+		                "type": "transparent"
+		            }
+		        }
+		    }
+		}
+	    ,{
+            "path" : "pages/page-info/page-info",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        },
+		{
+		    "path" : "pages/baibaoxiang/index/index",
+		    "style": {
+		        "navigationBarTitleText": "百宝乡",
+		        "app-plus": {
+		            "titleNView": {
+		                "type": "transparent"
+		            }
+		        }
+		    }
+		}
+        ,{
+            "path" : "pages/details/details",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+				"query": "id=19"
+            }
+            
+        }
+        ,{
+            "path" : "pages/xiangjian/xiangjian",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        
+        ,{
+            "path" : "pages/bbx-type-info/bbx-type-info",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+				"navigationStyle":"custom",
+				"onReachBottomDistance":50
+            }
+            
+        }
+        ,{
+            "path" : "pages/tabbar/tabbar-4/index/index",
+            "style" :
+            {
+                "navigationBarTitleText": "",
+            	 "navigationStyle":"custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+		
+		
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"app-plus": {
+		            "softinputMode": "adjustResize"
+		        }
+	},
+	"tabBar": {
+		"borderStyle": "black",
+		"backgroundColor": "#333",
+		"color": "#8F8F94",
+		"selectedColor": "#f33e54",
+		"list": [{
+				"pagePath": "pages/tabbar/tabbar-1/tabbar-1",
+				"iconPath": "static/img/tabbar/home.png",
+				"selectedIconPath": "static/img/tabbar/homeactive.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/tabbar/tabbar-2/tabbar-2",
+				"iconPath": "static/img/tabbar/guanzhu.png",
+				"selectedIconPath": "static/img/tabbar/guanzhuactive.png",
+				"text": "收藏"
+			},
+			//#ifdef MP-WEIXIN
+			{
+				"pagePath": "pages/tabbar/tabbar-3/tabbar-3",
+				"iconPath": "static/img/tabbar/add.png",
+				"selectedIconPath": "static/img/tabbar/addactive.png",
+				"text": "发布"
+			},
+			//#endif
+			//#ifndef MP-WEIXIN
+			{
+				"pagePath": "pages/tabbar-3-detial/tabbar-3-video/tabbar-3-video",
+				// "pagePath": "pages/tabbar/tabbar-3/tabbar-3",
+				"iconPath": "static/img/tabbar/add.png"
+				// "selectedIconPath": "static/img/tabbar/addactive.png"
+			},
+			//#endif
+			{
+				"pagePath": "pages/tabbar/tabbar-4/index/index",
+				"iconPath": "static/img/tabbar/news.png",
+				"selectedIconPath": "static/img/tabbar/newsactive.png",
+				"text": "消息",
+				"style": {
+					 "navigationStyle":"custom",
+					"enablePullDownRefresh": false,
+					"onReachBottomDistance": 50
+				}
+			},
+			{
+				"pagePath": "pages/tabbar/tabbar-5/tabbar-5",
+				"iconPath": "static/img/tabbar/me.png",
+				"selectedIconPath": "static/img/tabbar/meactive.png",
+				"text": "我"
+			}
+		]
+	}
+
+}

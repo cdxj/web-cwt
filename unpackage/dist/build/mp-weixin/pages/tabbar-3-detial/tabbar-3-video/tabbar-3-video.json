@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "active-form": "/components/active-form/active-form"
+  }
+}

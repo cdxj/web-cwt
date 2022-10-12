@@ -1,0 +1,1 @@
+<view class="content data-v-73730135"><publish-item vue-id="0a24b31e-1" itemData="{{itemData}}" data-event-opts="{{[['^onConfirmClick',[['onConfirmClick']]],['^onItemClick',[['onItemClick']]],['^onRemoveMenuData',[['onRemoveMenuData']]]]}}" bind:onConfirmClick="__e" bind:onItemClick="__e" bind:onRemoveMenuData="__e" class="data-v-73730135" bind:__l="__l"></publish-item></view>

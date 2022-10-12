@@ -1,0 +1,1 @@
+<view class="content data-v-fad0da96"><active-form bind:input="__e" vue-id="4993eca5-1" num="{{true}}" value="{{formData}}" data-event-opts="{{[['^input',[['__set_model',['','formData','$event',[]]]]]]}}" class="data-v-fad0da96" bind:__l="__l"></active-form><view data-event-opts="{{[['tap',[['sub',['$event']]]]]}}" class="subform data-v-fad0da96" bindtap="__e">提交表单</view></view>

@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "百宝乡",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "uni-data-select": "/uni_modules/uni-data-select/components/uni-data-select/uni-data-select",
+    "uni-icons": "/uni_modules/uni-icons/components/uni-icons/uni-icons",
+    "zwy-popup": "/uni_modules/zwy-popup/components/zwy-popup/zwy-popup"
+  }
+}

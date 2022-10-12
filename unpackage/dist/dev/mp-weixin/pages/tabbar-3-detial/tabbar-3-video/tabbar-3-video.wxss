@@ -1,0 +1,13 @@
+.content.data-v-6eddb6fe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.content .subform.data-v-6eddb6fe {
+  margin: 30rpx;
+  padding: 20rpx 60rpx;
+  border-radius: 18rpx;
+  background-color: bisque;
+}
+
