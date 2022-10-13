@@ -81,7 +81,7 @@ export default {
 				this.title = e.title,
 				this.type = e.type|0
 				this.keyword=e.keyword
-				this.platform = e.platform !=undefined ?e.platform:'bbx'
+				this.platform = e.platform !=undefined ?e.platform:'cwt'
 			}
 			console.log('type',this.platform)
 		},

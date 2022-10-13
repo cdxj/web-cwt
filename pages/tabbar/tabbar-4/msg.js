@@ -33,7 +33,7 @@ import { mapState, mapMutations } from 'vuex';
 				del_id:'',//方便存在本地的locakStorage 
 				offset:0,
 				limit:9,
-				platform_id:1,
+				platform_id:3,
 				pusher_type :1	,
 				type:'bbx'
 			}
@@ -278,6 +278,18 @@ import { mapState, mapMutations } from 'vuex';
 					
 					success: (res) => {
 						// console.log()
+						if(res.statusCode==400){
+							uni.showToast({
+								title: "请先登录",
+								duration: 1000,
+							})
+						}
+						// #ifdef APP-PLUS
+						plus.runtime.openURL(event.url) //这里默认使用外部浏览器打开而不是内部web-view组件打开
+						// #endif
+						// #ifdef H5
+						window.open(event.url)
+						// #endif
 						console.log('访问未知消息成功')
 					},
 					fail:(e)=>{
@@ -288,9 +300,9 @@ import { mapState, mapMutations } from 'vuex';
 					}
 					
 				})
-				uni.navigateTo({
-					url:'/pages/details/details?id='+event.url.split('?')[1].split('=')[1]
-				})
+				// uni.navigateTo({
+				// 	url:'/pages/details/details?id='+event.url.split('?')[1].split('=')[1]
+				// })
 			},
 			
 			

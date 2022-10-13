@@ -1,5 +1,5 @@
 <template>
-    <ir-tabs :curr="cur"  :navs="navs" @navChange='change'  navBgColor='#ffef34'  :multiple="true">
+    <ir-tabs :curr="cur"  :navs="navs" @navChange='change'  navBgColor='#020643'  :multiple="true">
         <template v-slot:page1>
             <view>
 				<u-list
@@ -111,9 +111,23 @@ import { mapState, mapMutations } from 'vuex';
 			// this.cur=0
 			// console.log(this.cur)
 			// this.getData()
+			if(!this.doAnything){
+				uni.showToast({
+					title: "请先认证村镇",
+					duration: 1000,
+				})
+				return
+			}
 			this.change(this.cur)
 		},
 		onReachBottom() {
+			if(!this.doAnything){
+				uni.showToast({
+					title: "请先认证村镇",
+					duration: 1000,
+				})
+				return
+			}
 			this.pageSize++;
 			console.log(this.cur)
 			if(this.cur==0){
@@ -126,6 +140,13 @@ import { mapState, mapMutations } from 'vuex';
 		},
 		methods:{
 			deleteItem(item,i,e){
+				if(!this.doAnything){
+					uni.showToast({
+						title: "请先认证村镇",
+						duration: 1000,
+					})
+					return
+				}
 				console.log('item',item,i)
 				var ev = e || window.event;
 				  if(ev && ev.stopPropagation) {
@@ -176,6 +197,13 @@ import { mapState, mapMutations } from 'vuex';
 				  })
 			},
 			collect(paper,i,e){
+				if(!this.doAnything){
+					uni.showToast({
+						title: "请先认证村镇",
+						duration: 1000,
+					})
+					return
+				}
 				var ev = e || window.event;
 				  if(ev && ev.stopPropagation) {
 				    //非IE浏览器
@@ -227,6 +255,13 @@ import { mapState, mapMutations } from 'vuex';
 				  })
 			},
 			getData(offset=5){
+				if(!this.doAnything){
+					uni.showToast({
+						title: "请先认证村镇",
+						duration: 1000,
+					})
+					return
+				}
 				let httpData = {
 					user_id :this.userInfo.userId,
 					offset:this.pageSize*this.limit,
@@ -257,6 +292,13 @@ import { mapState, mapMutations } from 'vuex';
 				})
 			},
 			change(cur){
+				if(!this.doAnything){
+					uni.showToast({
+						title: "请先认证村镇",
+						duration: 1000,
+					})
+					return
+				}
 				this.cur=cur
 				if(cur==0){
 					this.$store.commit('clearPL')
@@ -271,6 +313,13 @@ import { mapState, mapMutations } from 'vuex';
 				}
 			},
 			getownPaper(){
+				if(!this.doAnything){
+					uni.showToast({
+						title: "请先认证村镇",
+						duration: 1000,
+					})
+					return
+				}
 				let httpData = {
 					user_id :this.userInfo.userId,
 					offset:this.pageSize*this.limit,

@@ -179,13 +179,16 @@
 			},
 			secret() {
 				console.log('to 村务通')
-				uni.navigateTo({
-					url: '/pages/cunwutong/cunwutong'
+				uni.switchTab({
+					url: '../tabbar/tabbar-1/tabbar-1',
+					fail (error) {
+					        console.log(error)
+					    }
 				})
 			},
 			entrance() {
 				uni.navigateTo({
-					url: '/pages/level/paper'
+					url:'../tabbar/tabbar-1/tabbar-1'
 				})
 			}
 		}

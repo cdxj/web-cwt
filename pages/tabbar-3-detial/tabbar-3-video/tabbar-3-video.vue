@@ -148,6 +148,13 @@ import ActiveForm from "@/components/active-form/active-form";
 		methods: {
 		// 提交表单
 			sub() {
+				if(!this.doAnything){
+								uni.showToast({
+									title: "请先认证村镇",
+									duration: 1000,
+								})
+								return
+							}
 				if(this.userInfo.session==null){	
 					uni.switchTab({
 						url: '/pages/tabbar/tabbar-5/tabbar-5',

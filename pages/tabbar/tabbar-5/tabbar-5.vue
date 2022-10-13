@@ -94,7 +94,7 @@
 				}, 
 				{
 				    icon: '/static/img/page5/funMoreIcon3.png',
-				    word: '客服帮助',
+				    word: '乡村认证',
 				    onPlate: 'onHelp',
 				}, 
 				{
@@ -131,17 +131,31 @@ let user = {}
 		    //     url:url
 		    // })
 		},
+		
 		navClick(event){
 			if(event=='goExit'){
 				uni.removeStorage({key: 'user'});
 				this.userInfo={}
-
 			}else{
+				if(event == 'goMyAddressList'){
+					console.log('管理账户')
+				}
+				if(event == 'onHelp'){
+					console.log('乡村认证')
+					uni.navigateTo({
+						url: '../../manage/manage',
+						fail (error) {
+						        console.log(error)
+						    }
+					})
+				}
+				else{
 				this.$refs.uToast.show({
 					type: 'error',
 					title:'警告',
 					message:'权限缺失,请切换账号!'
 				})
+				}
 			}
 			
 		},

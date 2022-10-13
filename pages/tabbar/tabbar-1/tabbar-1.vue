@@ -143,7 +143,8 @@ import { mapState, mapMutations } from 'vuex';
  			loadingText:"全部加载...",
 			type:0,
 			tabClick: false, 
-			userInfo:{}
+			userInfo:{},
+			doAnything:false
  			
  		};
  	},
@@ -170,16 +171,37 @@ import { mapState, mapMutations } from 'vuex';
 		    }
 		});
 		this.userInfo=user
+		this.value = user.identPart
+		if(user.identPart){
+			this.doAnything =true
+		}
 		this.$store.commit('clearPL')
-		this.getPages()
+		if(this.doAnything){
+			this.getPages()
+		}else{
+			console.log('wuquan')
+			uni.showToast({
+							title: "请先认证村镇",
+							duration: 1000,
+						})
+		}
  	},
  	onPageScroll(e){
+		if(this.doAnything){
+			
+		
  		//兼容iOS端下拉时顶部漂移
  		if(e.scrollTop>=0){
  			this.headerPosition = "fixed";
  		}else{
  			this.headerPosition = "absolute";
  		}
+		}else{
+			uni.showToast({
+				title: "请先认证村镇",
+				duration: 1000,
+			})
+		}
  	},
  	//下拉刷新，需要自己在page.json文件中配置开启页面下拉刷新 "enablePullDownRefresh": true
  	onPullDownRefresh() {
@@ -194,7 +216,14 @@ import { mapState, mapMutations } from 'vuex';
 	// 	this.getPages()
 	// },
 	onReachBottom() {
-		this.getPages()
+		if(this.doAnything){
+			this.getPages()
+		}else{
+			uni.showToast({
+				title: "请先认证村镇",
+				duration: 1000,
+			})
+		}
 	},
  	methods: {
 		toTop() {
@@ -205,6 +234,13 @@ import { mapState, mapMutations } from 'vuex';
 		},
 		// TODO 调试token
 		collect(paper,i,e){
+			if(!this.doAnything){
+				uni.showToast({
+					title: "请先认证村镇",
+					duration: 1000,
+				})
+				return
+			}
 			var ev = e || window.event;
 			  if(ev && ev.stopPropagation) {
 			    //非IE浏览器
@@ -260,10 +296,17 @@ import { mapState, mapMutations } from 'vuex';
 			})
 		},
 		changeTab(item){
+			if(!this.doAnything){
+				uni.showToast({
+					title: "请先认证村镇",
+					duration: 1000,
+				})
+				return
+			}
 			console.log('item',item)
 			let index = 0
 			if(item.index!=0){
-				index = item.index+13
+				index = item.index
 			}
 			this.type =index
 			this.$store.commit('clearPL')
@@ -271,7 +314,7 @@ import { mapState, mapMutations } from 'vuex';
 			index=0
 		},
 		getPages(){
-			console.log(2)
+			
 			let httpData = {
 				nums:4,
 				type:this.type,
@@ -289,6 +332,13 @@ import { mapState, mapMutations } from 'vuex';
 					this.range = tmp
 				}
 			})
+			if(!this.doAnything){
+				uni.showToast({
+					title: "请先认证村镇",
+					duration: 1000,
+				})
+				return
+			}
 			uni.request({
 				url:'/api/doc/get_recommend_doc',
 				method:'POST',
@@ -306,6 +356,13 @@ import { mapState, mapMutations } from 'vuex';
 			// });
 		},
 		change(event){
+			if(!this.doAnything){
+				uni.showToast({
+					title: "请先认证村镇",
+					duration: 1000,
+				})
+				return
+			}
 			// 申请认证
 		console.log(event)
 		// this.ishide = true
@@ -320,10 +377,17 @@ import { mapState, mapMutations } from 'vuex';
  		// },
  		//搜索跳转
  		toSearch(){
+			if(!this.doAnything){
+				uni.showToast({
+					title: "请先认证村镇",
+					duration: 1000,
+				})
+				return
+			}
 			console.log('o')
  			// uni.switchTab({url: `../../search/search`})
 			uni.navigateTo({
-				url: '../../search/search?platform='+'snfw',
+				url: '../../search/search?platform='+'cwt',
 				fail (error) {
 				        console.log(error)
 				    }
@@ -331,10 +395,24 @@ import { mapState, mapMutations } from 'vuex';
  		},
  		//轮播图跳转
  		toSwiper(e){
+			if(!this.doAnything){
+				uni.showToast({
+					title: "请先认证村镇",
+					duration: 1000,
+				})
+				return
+			}
  			uni.showToast({title: e.src});
  		},
  		//分类跳转
  		toCategory(e){
+			if(!this.doAnything){
+				uni.showToast({
+					title: "请先认证村镇",
+					duration: 1000,
+				})
+				return
+			}
 			this.$store.commit('clearPL')
 			if(e.cat_id!=0){
 				this.tabs=e.cat_id-13
@@ -352,6 +430,13 @@ import { mapState, mapMutations } from 'vuex';
  		},
  		//更新分类指示器
  		categoryChange(event) {
+			if(!this.doAnything){
+				uni.showToast({
+					title: "请先认证村镇",
+					duration: 1000,
+				})
+				return
+			}
  			this.currentPageindex = event.detail.current;
  		},
  		//分类图片加载完毕

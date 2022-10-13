@@ -46,7 +46,7 @@ import { mapState, mapMutations } from 'vuex';
 				del_id:'',//方便存在本地的locakStorage 
 				offset:0,
 				limit:9,
-				platform_id:1,
+				platform_id:3,
 				pusher_type :1	
 			}
 		},
@@ -100,8 +100,15 @@ import { mapState, mapMutations } from 'vuex';
 			//this.Refresh("init");
 			this.offset=0
 			this.limit=9
-			this.platform_id=1
+			this.platform_id=3
 			this.pusher_type=1
+			if(!this.doAnything){
+							uni.showToast({
+								title: "请先认证村镇",
+								duration: 1000,
+							})
+							return
+						}
 			this.getData()
 		},
 		onPullDownRefresh: function() {
@@ -131,7 +138,13 @@ import { mapState, mapMutations } from 'vuex';
 				return res
 			},
 			getData(){
-				
+				if(!this.doAnything){
+								uni.showToast({
+									title: "请先认证村镇",
+									duration: 1000,
+								})
+								return
+							}
 				let httpData = {
 					offset:this.offset,
 					limit:this.limit,
@@ -153,7 +166,15 @@ import { mapState, mapMutations } from 'vuex';
 						this.list_Messages[0].vote = res.data.data.bbx
 						this.list_Messages[1].vote = res.data.data.cwt
 						this.list_Messages[2].vote = res.data.data.snfw
-						
+						if(res.statusCode==400){
+							uni.showToast({
+								title: "请先登录",
+								duration: 1000,
+							})
+							this.list_Messages[0].vote = 0
+							this.list_Messages[1].vote = 0
+							this.list_Messages[2].vote = 0
+						}
 						// this.$store.commit('setPaperList',res.data.data.msgs)
 						// this.list_Messages= this.opData()
 					},
@@ -241,6 +262,13 @@ import { mapState, mapMutations } from 'vuex';
 			
 			},
 			icon_44_click(event,index){
+				if(!this.doAnything){
+								uni.showToast({
+									title: "请先认证村镇",
+									duration: 1000,
+								})
+								return
+							}
 				var ev = event || window.event;
 				  if(ev && ev.stopPropagation) {
 				    //非IE浏览器
@@ -280,6 +308,13 @@ import { mapState, mapMutations } from 'vuex';
 			* 数据取值  var index = e.currentTarget.dataset.index; var cata = this.list_cata_list[index];
 			*/
 			icon_40_click:function(event){
+				if(!this.doAnything){
+								uni.showToast({
+									title: "请先认证村镇",
+									duration: 1000,
+								})
+								return
+							}
 				// console.log(event.url.split('?')[1].split('=')[1])
 				console.log(event.type)
 				if(event!=0){

@@ -58,10 +58,10 @@
 				@touchend='touchend'
 				@touchcancel="touchend">
 				<view class="ir-page" :style="[pageStyle]">
-					<slot name="page1">1</slot>
+					<slot name="page1"></slot>
 				</view>
 				<view class="ir-page" :style="[pageStyle]">
-					<slot name="page2">2</slot>
+					<slot name="page2"></slot>
 				</view>
 				<view class="ir-page" :style="[pageStyle]">
 					<slot name="page3">3</slot>
