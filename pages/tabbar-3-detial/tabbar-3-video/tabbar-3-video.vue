@@ -10,7 +10,7 @@
 		        >
 		        </u-navbar>
 				
-		<active-form ref="child" v-model="formData" num></active-form>
+		<active-form style='width: 100%;' ref="child" v-model="formData" num></active-form>
 		<!-- <view class="subform" @click="">发布</view> -->
 	</view>
 </template>
@@ -134,6 +134,27 @@ import ActiveForm from "@/components/active-form/active-form";
 			    }
 			});
 			this.userInfo=user
+			if(this.userInfo.isManager==1){
+				this.formData[2].list = [{
+                            value: 1,
+                            label: "财务公开",
+                        },
+                        {
+                            value: 2,
+                            label: "活动通知",
+                        },
+                        {
+                            value: 3,
+                            label: "村事公告",
+                        }]
+			}else{
+				this.formData[2].list = [
+					{
+					    value: 4,
+					    label: "村民咨询",
+					}
+				]
+			}
 		},
 		watch:{
 			formData:{

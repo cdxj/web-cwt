@@ -142,12 +142,15 @@ let user = {}
 				}
 				if(event == 'onHelp'){
 					console.log('乡村认证')
-					uni.navigateTo({
-						url: '../../manage/manage',
-						fail (error) {
-						        console.log(error)
-						    }
-					})
+					if(this.userInfo.session){
+						uni.navigateTo({
+							url: '../../manage/manage',
+							fail (error) {
+							        console.log(error)
+							    }
+						})
+					}
+					
 				}
 				else{
 				this.$refs.uToast.show({

@@ -2,7 +2,7 @@
 	<view>
 		<view>
 			<f-navbar :title="titleTop" fontColor="#fff" gradient="linear-gradient(-90deg, #fff, #2979ff)">
-				<view class="u-flex" slot="right">
+				<view v-if="!userInfo.isManager" class="u-flex" slot="right">
 				   <view @click="renzhen" style="margin-left: 165px;" >
 					   认证
 					<!-- <u-icon name="search" color="#2979ff" @click="toSearch()" size="55"></u-icon> -->
@@ -11,10 +11,59 @@
 			</f-navbar>
 		</view>
 		
-		<!-- 申请记录 -->
-		<view>
-			<u-cell-group>
+		<!-- 管理记录 -->
+		<view v-if="userInfo.isManager">
+			<u-cell-group v-for="(item,index)  in shenqingList">
 				<u-cell
+				@click="shenhe(item,index)"
+					v-if='item.status==0'
+						size="large"
+						:title=item.title
+						:value='item.content'
+						:label='item.label'
+					>
+			</u-cell>
+			 <u-cell v-if='item.status==1'  value="已审核">
+				<view
+					slot="title"
+					class="u-slot-title"
+				>
+					<text class="u-cell-text">{{item.title}}</text>
+					<u-tag
+						text="已批准"
+						plain
+						size="mini"
+						type="success"
+						style='width: 50px;'
+					>
+					
+					</u-tag>
+				</view>
+			</u-cell>
+			<u-cell v-if='item.status==2' value="已审核">
+				<view
+					slot="title"
+					class="u-slot-title"
+				>
+					<text class="u-cell-text">{{item.title}}</text>
+					<u-tag
+						text="已拒绝"
+						plain
+						size="mini"
+						type="error"
+						style='width: 50px;'
+					>
+					</u-tag>
+				</view>
+			</u-cell>
+			</u-cell-group>
+		</view>	
+		
+		<!-- 申请记录 -->
+		<view v-else>
+			<u-cell-group >
+				<u-cell
+				@click="shanchu($event)"
 					size="large"
 					:title='renzhenInfo.title'
 					:value='renzhenInfo.content'
@@ -22,17 +71,6 @@
 				></u-cell>
 			</u-cell-group>
 		</view>		
-		<!-- 管理记录 -->
-		<view>
-			<u-cell-group>
-				<u-cell
-					size="large"
-					:title='renzhenInfo.title'
-					:value='renzhenInfo.content'
-					:label='renzhenInfo.label'
-				></u-cell>
-			</u-cell-group>
-		</view>	
 		
 		
 		
@@ -71,7 +109,35 @@
 					<!-- </view> -->
 				</view>
 			<view class="popup_overlay" :hidden="userFeedbackHidden" @click="hideDiv()"></view>
-			<!-- <u-button @click="show_sure = true">打开</u-button> -->
+			<!-- <u-button @click="show_sure = true">打开</u-button> -->.
+			
+			<!-- 进行审核的弹窗 -->
+			<view :hidden="userFeedbackHidden1" style="height: 180px;" class="popup_content">
+						<view class="popup_title" style="color='#4e5667'">{{content_sure}}</view>
+						<view style="margin-top: 30px;">
+						 <u--input
+						    placeholder="拒绝请输入理由"
+						    border="surround"
+						    v-model="liyou"
+						  ></u--input>
+						   
+						  </view>
+				
+							<view style="margin-top: 20px;">
+								<u-button style='display: inline-block;width:80px;font-size: 22px;margin-left:30px' type="success " @click="confirm1" :plain="true" :hairline="true" text="通过"></u-button>
+								<u-button style='display: inline-block;width:80px;font-size: 22px;margin-left:40px' type="error" @click="close1" :plain="true" :hairline="true" text="拒绝"></u-button>
+							</view>
+						<!-- </view> -->
+					<!-- </view> -->
+				</view>
+			<view class="popup_overlay" :hidden="userFeedbackHidden1" @click="hideDiv()"></view>
+			
+			
+			<!-- 删除弹出框 -->
+			<view >
+				<u-modal showConfirmButton showCancelButton :show="scshow" :title="sctitle" :content='sccontent' @confirm="scqueren" ref="uModal" @cancel="scquxiao"></u-modal>
+			</view>
+		
 		</view>
 	</view>
 </template>
@@ -80,6 +146,10 @@
 	export default {
 		data() {
 			return {
+				sctitle:'删除',
+				scshow:false,
+				sccontent:'请确认是否删除本条请求认证记录',
+				userFeedbackHidden1: true, // 默认隐藏
 				userFeedbackHidden: true, // 默认隐藏
 				feedbackContent: '' ,// 输入数量
 				name:'',
@@ -97,7 +167,10 @@
 				cur:{},
 				userInfo:{},
 				renzhenInfo:{},
-				renzhenList:[]
+				shenqingList:[],
+				liyou:'',
+				info:{},
+				cur_index:0
 			}
 		},
 		onLoad(){
@@ -111,9 +184,121 @@
 			this.userInfo=user
 			this.getList()
 			this.getrenzhenList()
+			this.getshenqingList()
 		},
 		methods: {
+			scquxiao(){
+				this.scshow=false
+			},
+			scqueren(){
+				console.log(this.renzhenInfo)
+				this.scshow=false
+				uni.request({
+					url:'/api/ident/drop_ident',
+					method:'POST',
+					header:{
+						'Xj-Token':this.userInfo.session
+					},
+					data:{
+						identid:this.renzhenInfo.id
+					},
+					success: (res) => {
+						if(res.statusCode==400){
+							uni.showToast({
+								title: res.data.msg,
+								duration: 1000,
+							})
+							return
+						}
+						this.renzhenInfo={}
+					}
+				})
+			},
+			shanchu(item){
+				this.scshow=true
+				console.log(item)
+			},
+			close1(){
+				this.userFeedbackHidden1=true
+				uni.request({
+					url:'/api/ident/partmanager_check_ident',
+					method:'POST',
+					header:{
+						'Xj-Token':this.userInfo.session
+					},
+					data:{
+						identid:this.info.id,
+						status:2,
+						reject_reason:this.liyou
+					},
+					success: (res) => {
+						this.liyou=''
+						if(res.statusCode==400){
+							uni.showToast({
+								title: res.data.msg,
+								duration: 1000,
+							})
+							return
+						}
+						this.shenqingList[this.cur_index].status=2
+					}
+				})
+			},
+			confirm1(){
+				this.userFeedbackHidden1=true
+				uni.request({
+					url:'/api/ident/partmanager_check_ident',
+					method:'POST',
+					header:{
+						'Xj-Token':this.userInfo.session
+					},
+					data:{
+						identid:this.info.id,
+						status:1,
+						reject_reason:''
+					},
+					success: (res) => {
+						this.liyou=''
+						if(res.statusCode==400){
+							uni.showToast({
+								title: res.data.msg,
+								duration: 1000,
+							})
+							return
+						}
+						this.shenqingList[this.cur_index].status=1
+					}
+				})
+			},
+			shenhe(item,index){
+				this.userFeedbackHidden1=false
+				console.log('审核',item)
+				this.info = item
+				this.cur_index = index
+				// uni.request({
+				// 	url:'/api/ident/partmanager_check_ident',
+				// 	method:'POST',
+				// 	header:{
+				// 		'Xj-Token':this.userInfo.session
+				// 	},
+				// 	data:{
+				// 		identid:item.id,
+				// 	},
+				// 	success: (res) => {
+				// 		if(res.statusCode==400){
+				// 			uni.showToast({
+				// 				title: res.data.msg,
+				// 				duration: 1000,
+				// 			})
+				// 			return
+				// 		}
+				// 	}
+				// })
+			},
 			getshenqingList(){
+				if(this.userInfo.session==null || this.userInfo.isManager!=1){
+					return
+				}
 				uni.request({
 					url:'/api/ident/partmanager_list_ident',
 					method:'POST',
@@ -121,7 +306,7 @@
 						'Xj-Token':this.userInfo.session
 					},
 					data:{
-						status:0
+						status:100
 					},
 					success: (res) => {
 						if(res.statusCode==400){
@@ -132,28 +317,26 @@
 							return
 						}
 						let tmp = res.data.data.idents
-						console.log(tmp)
-						// tmp.forEach(item=>{
-							tmp.title = this.list[tmp.ident_part-1].text.split('-').pop()+"认证记录"
-							if(tmp.status==0){
-								tmp.label = '等待审核中'
-								tmp.content = '审核中'
-							}else if(tmp.status==1){
-								tmp.content = '审核通过'
-							}else if(tmp.status==2){
-								tmp.content = '审核未通过'
+						tmp.forEach(item=>{
+							item.title = this.list[item.ident_part-1].text.split('-').pop()+"认证记录"
+							if(item.status==0){
+								item.label = item.ident_name+"  "+item.ident_idcard
+								item.content = '等待审核'
+							}else if(item.status==1){
+								item.content = '审核通过'
+							}else if(item.status==2){
+								item.content = '审核未通过'
 							}
-							else if(tmp.reject_reason!=null){
-								tmp.label = tmp.reject_reason
-							}else{
-								tmp.label = '审核完成'
-							}
-							this.renzhenInfo = tmp
-						// })
+							
+						})
+						this.shenqingList = tmp
 					}
 				})
 			},
 			getrenzhenList(){
+				if(this.userInfo.session==null || this.userInfo.isManager==1){
+					return
+				}
 				uni.request({
 					url:'/api/ident/get_ident_record',
 					method:'GET',
@@ -172,7 +355,6 @@
 							return
 						}
 						let tmp = res.data.data.idents
-						console.log(tmp)
 						// tmp.forEach(item=>{
 							tmp.title = this.list[tmp.ident_part-1].text.split('-').pop()+"认证记录"
 							if(tmp.status==0){
@@ -180,14 +362,17 @@
 								tmp.content = '审核中'
 							}else if(tmp.status==1){
 								tmp.content = '审核通过'
+								this.userInfo.identPart = tmp.ident_part
+								uni.setStorage({key: 'user',data: this.userInfo});
 							}else if(tmp.status==2){
 								tmp.content = '审核未通过'
-							}
-							else if(tmp.reject_reason!=null){
-								tmp.label = tmp.reject_reason
 							}else{
 								tmp.label = '审核完成'
 							}
+							 if(tmp.reject_reason!=null){
+								tmp.label = tmp.reject_reason
+							}
+							console.log(tmp)
 							this.renzhenInfo = tmp
 						// })
 					}
@@ -203,6 +388,14 @@
 
 			},
 			renzhen(){
+				if(this.renzhenInfo.title){
+					uni.showToast({
+						title: '还存在未完成的认证记录',
+						type:'error',
+						duration: 1000,
+					})
+					return
+				}
 				this.show = true
 			},
 			closeSheet(){
@@ -269,6 +462,9 @@
 								duration: 1000,
 							})
 						}
+						this.name=''
+						this.idcard=null
+						this.getrenzhenList()
 					}
 				})
 				this.userFeedbackHidden = true
@@ -296,6 +492,8 @@
 			},
 			close(){
 				this.userFeedbackHidden = true
+				this.name=''
+				this.idcard=null
 				console.log('取消')
 			},
 		}

@@ -17,15 +17,17 @@
  						  @change="change"
  						  placeholder="地址"
  						  class='select'
-						  style="width: 100px;font-size: 8px;"
+						  disabled="true"
+						   :clear="false"
+						  style="width: 250px;font-size: 8px;margin-left: 260px;"
  						></uni-data-select>
  						<!-- 						   -->
  				</view>	
  			</view>
- 			<view style="margin-left: 65px;width:550px" class="input">
+ 			<!-- <view style="margin-left: 65px;width:550px" class="input">
  				<view class="icon search"></view>
  				<input placeholder="热点新闻" @tap="toSearch()" />
- 			</view>
+ 			</view> -->
  			<!-- <view style="margin-left: 35px;" class="input">
  				<view class="icon search"></view>
  				<input placeholder="热点新闻" @tap="toSearch()" />
@@ -38,14 +40,14 @@
  		<!-- 占位 -->
  		<view class="place"></view>
  		<!-- 轮播图 -->
- 		<view class="swiper-view">
+ 		<!-- <view class="swiper-view">
  			<swiper class="swiper" indicator-dots="true" autoplay="true" circular="true" indicator-active-color="#ffffff">
  				<swiper-item v-for="swiper in swiperList" :key="swiper.sid" @tap="toSwiper(swiper)">
  					<image mode="aspectFill" :src="swiper.img"></image>
  				</swiper-item>
  			</swiper>
  			<view class="keep-out"></view>
- 		</view>
+ 		</view> -->
  		<view class="category">
  			<view class="box" >
  				<swiper	class="swiper" duration="300" :style="{ height: categoryHeight }" @change="categoryChange">
@@ -172,6 +174,7 @@ import { mapState, mapMutations } from 'vuex';
 		});
 		this.userInfo=user
 		this.value = user.identPart
+		console.log(user)
 		if(user.identPart){
 			this.doAnything =true
 		}
@@ -326,9 +329,9 @@ import { mapState, mapMutations } from 'vuex';
 				// data:httpData,
 				success: (res) => {
 					let tmp = res.data.data.parts
-					tmp.forEach((item)=>{
-						item['text']=item['text'].split('-').pop()
-					})
+					// tmp.forEach((item)=>{
+					// 	item['text']=item['text'].split('-').pop()
+					// })
 					this.range = tmp
 				}
 			})
