@@ -10,6 +10,32 @@
 				</view>
 			</f-navbar>
 		</view>
+		
+		<!-- 申请记录 -->
+		<view>
+			<u-cell-group>
+				<u-cell
+					size="large"
+					:title='renzhenInfo.title'
+					:value='renzhenInfo.content'
+					:label='renzhenInfo.label'
+				></u-cell>
+			</u-cell-group>
+		</view>		
+		<!-- 管理记录 -->
+		<view>
+			<u-cell-group>
+				<u-cell
+					size="large"
+					:title='renzhenInfo.title'
+					:value='renzhenInfo.content'
+					:label='renzhenInfo.label'
+				></u-cell>
+			</u-cell-group>
+		</view>	
+		
+		
+		
 		<view>
 			<u-action-sheet @close="closeSheet" :actions="list" @select="selectClick" :title="title" :show="show"></u-action-sheet>
 			<!-- <u-button @click="show = true">打开ActionSheet</u-button> -->
@@ -70,7 +96,8 @@
 				content_sure: "认证",
 				cur:{},
 				userInfo:{},
-				renzhenlist:[]
+				renzhenInfo:{},
+				renzhenList:[]
 			}
 		},
 		onLoad(){
@@ -83,10 +110,88 @@
 			});
 			this.userInfo=user
 			this.getList()
+			this.getrenzhenList()
 		},
 		methods: {
+			getshenqingList(){
+				uni.request({
+					url:'/api/ident/partmanager_list_ident',
+					method:'POST',
+					header:{
+						'Xj-Token':this.userInfo.session
+					},
+					data:{
+						status:0
+					},
+					success: (res) => {
+						if(res.statusCode==400){
+							uni.showToast({
+								title: res.data.msg,
+								duration: 1000,
+							})
+							return
+						}
+						let tmp = res.data.data.idents
+						console.log(tmp)
+						// tmp.forEach(item=>{
+							tmp.title = this.list[tmp.ident_part-1].text.split('-').pop()+"认证记录"
+							if(tmp.status==0){
+								tmp.label = '等待审核中'
+								tmp.content = '审核中'
+							}else if(tmp.status==1){
+								tmp.content = '审核通过'
+							}else if(tmp.status==2){
+								tmp.content = '审核未通过'
+							}
+							else if(tmp.reject_reason!=null){
+								tmp.label = tmp.reject_reason
+							}else{
+								tmp.label = '审核完成'
+							}
+							this.renzhenInfo = tmp
+						// })
+					}
+				})
+			},
 			getrenzhenList(){
-				
+				uni.request({
+					url:'/api/ident/get_ident_record',
+					method:'GET',
+					header:{
+						'Xj-Token':this.userInfo.session
+					},
+					data:{
+						userid:this.userInfo.userId
+					},
+					success: (res) => {
+						if(res.statusCode==400){
+							uni.showToast({
+								title: res.data.msg,
+								duration: 1000,
+							})
+							return
+						}
+						let tmp = res.data.data.idents
+						console.log(tmp)
+						// tmp.forEach(item=>{
+							tmp.title = this.list[tmp.ident_part-1].text.split('-').pop()+"认证记录"
+							if(tmp.status==0){
+								tmp.label = '等待审核中'
+								tmp.content = '审核中'
+							}else if(tmp.status==1){
+								tmp.content = '审核通过'
+							}else if(tmp.status==2){
+								tmp.content = '审核未通过'
+							}
+							else if(tmp.reject_reason!=null){
+								tmp.label = tmp.reject_reason
+							}else{
+								tmp.label = '审核完成'
+							}
+							this.renzhenInfo = tmp
+						// })
+					}
+				})
 			},
 			showDiv() { // 显示输入弹出框
 				this.userFeedbackHidden = false;
@@ -125,7 +230,25 @@
 			},
 			confirm(){
 				console.log('认证确认')
-				this.shenfen()
+				
+				let reg1 = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/        //正则表达式定义身份证号正确格式
+				
+				if (!this.idcard) {      //判断如果身份证号（this.card)num）为空，提示用户输入身份证号
+					uni.showToast({
+						title: '请输入身份证号',
+						icon: 'none'
+					})
+					return
+				}
+				
+				if (!reg1.test(this.idcard)) {      //判断身份证号格式时候正确
+					uni.showToast({
+						title: '请输入正确的身份证号',
+						icon: 'none'
+				        })
+				return
+				}
+				
 				let httpData = {
 					ident_name:this.name,
 					ident_idcard:this.idcard,
