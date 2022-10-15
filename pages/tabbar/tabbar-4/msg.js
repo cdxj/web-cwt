@@ -67,6 +67,9 @@ import { mapState, mapMutations } from 'vuex';
 			if (options != null && options !=""){
 				this.type = options.type
 			}   
+			if(user.identPart){
+				this.doAnything =true
+			}
 			//执行初始化,需要用的时候，可以把注释取掉
 			//this.Refresh("init");
 

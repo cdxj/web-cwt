@@ -17,12 +17,15 @@
  						  @change="change"
  						  placeholder="地址"
  						  class='select'
-						  disabled="true"
+						  disabled
 						   :clear="false"
-						  style="width: 250px;font-size: 8px;margin-left: 260px;"
+						  style="width: 200px;font-size: 8px;margin-left: 290px;"
  						></uni-data-select>
  						<!-- 						   -->
  				</view>	
+				<view style="display: inline-block;margin-left: 80px;">
+					<u--text  iconStyle="font-size: 19px" type="warning" text="警告"></u--text>
+				</view>
  			</view>
  			<!-- <view style="margin-left: 65px;width:550px" class="input">
  				<view class="icon search"></view>
@@ -62,19 +65,22 @@
  				</swiper>
  			</view>
  		</view>
+		<view>
+		      <u-notice-bar :text="text1"></u-notice-bar>
+		    </view>
  		<!-- 推荐 -->
  		<view class="pick">
  			<view class="box">
  				<view class="title">
- 					<view class="big">文章推荐</view>
+ 					<view class="big">最新政事</view>
  				</view>
  			</view>
  		</view>
  		<!-- 文章列表 -->
  		<view class="goods-list">
-			 <u-sticky style="padding: 0 10px;" bgColor="#fff">
+			<!-- <u-sticky style="padding: 0 10px;" bgColor="#fff">
 			     <u-tabs :current="tabs" :list="list1" @click="changeTab"></u-tabs>
-			   </u-sticky>
+			   </u-sticky> -->
  			<view class="product-list">
  				<view class="product" v-for="(paper,i) in paperList" :key="i" @tap="toGoods(paper)">
 					<navigator class="item" hover-class="none" :url="'/pages/details/details?id=' + paper.docid">
@@ -103,6 +109,7 @@ import { mapState, mapMutations } from 'vuex';
 	},
  	data() {
  		return {
+			 text1: '2022年12月12日，大家来做核酸。',
 			tabs:0,
 			maxNum:6,
 			list1: [{
@@ -179,14 +186,16 @@ import { mapState, mapMutations } from 'vuex';
 			this.doAnything =true
 		}
 		this.$store.commit('clearPL')
+		// if(this.userInfo)
+		console.log(this.userInfo)
 		if(this.doAnything){
 			this.getPages()
 		}else{
 			console.log('wuquan')
 			uni.showToast({
-							title: "请先认证村镇",
-							duration: 1000,
-						})
+				title: "请先认证村镇",
+				duration: 1000,
+			})
 		}
  	},
  	onPageScroll(e){
@@ -209,6 +218,7 @@ import { mapState, mapMutations } from 'vuex';
  	//下拉刷新，需要自己在page.json文件中配置开启页面下拉刷新 "enablePullDownRefresh": true
  	onPullDownRefresh() {
          setTimeout(function () {
+			 this.getPages()
              uni.stopPullDownRefresh();
          }, 1000);
      },
@@ -220,7 +230,7 @@ import { mapState, mapMutations } from 'vuex';
 	// },
 	onReachBottom() {
 		if(this.doAnything){
-			this.getPages()
+			// this.getPages()
 		}else{
 			uni.showToast({
 				title: "请先认证村镇",
@@ -256,9 +266,16 @@ import { mapState, mapMutations } from 'vuex';
 
 			  if(this.userInfo.session==null){
 			  	uni.showToast({
-			  		title: "请先登录",
+			  		title: "请重新登录",
 			  		duration: 1000,
 			  	})
+				uni.setStorage({key: 'user',data: {}});
+				uni.navigateTo({
+					url: '/pages/tabbar/tabbar-5/tabbar-5',
+					fail (error) {
+					        console.log(error)
+					    }
+				})
 			  	return 
 			  }
 			  this.paperList[i].is_collect=this.paperList[i].is_collect==0?1:0
@@ -319,7 +336,7 @@ import { mapState, mapMutations } from 'vuex';
 		getPages(){
 			
 			let httpData = {
-				nums:4,
+				nums:10,
 				type:this.type,
 				platform_id :3
 			}
@@ -429,7 +446,7 @@ import { mapState, mapMutations } from 'vuex';
 			});  
  		},
  		toGoods(e){
- 			uni.showToast({title: '文章'+e.doctitle});
+ 			// uni.showToast({title: '文章'+e.doctitle});
  		},
  		//更新分类指示器
  		categoryChange(event) {

@@ -84,6 +84,9 @@ import { mapState, mapMutations } from 'vuex';
 
 		},
 		onShow() {
+			if(this.userInfo.identPart){
+				this.doAnything =true
+			}
 			if(this.userInfo.session==null){
 				uni.showToast({
 					title: "请先登录",

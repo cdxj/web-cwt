@@ -134,6 +134,9 @@ import ActiveForm from "@/components/active-form/active-form";
 			    }
 			});
 			this.userInfo=user
+			if(user.identPart){
+				this.doAnything =true
+			}
 			if(this.userInfo.isManager==1){
 				this.formData[2].list = [{
                             value: 1,

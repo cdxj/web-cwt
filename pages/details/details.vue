@@ -24,7 +24,7 @@
 				<!-- <image style="display: block; margin-top: 40px;" :src="paper.file_urls"></image> -->
 				<view class="desc"><parser :html="paper.doc_content"></parser></view>
 				<hb-comment ref="hbComment" @add="add" @del="del" @like="like" @focusOn="focusOn" :deleteTip="'确认删除？'"
-				    :cmData="commentData" v-if="commentData"></hb-comment>
+				    :cmData="commentData" v-if="commentData  && paper.doc_type_name!= '财务公开' &&paper.doc_type_name!= '政事发布' &&paper.doc_type_name!= '村事公告' "></hb-comment>
 				<!-- <view>
 					<view style="margin-top: 10px;" v-if="discussions.length>0" v-for="(item,index) in discussions" :key="index">
 						<u-avatar
@@ -164,10 +164,10 @@ export default {
 				
 				success: (res) => {
 					
-					uni.showToast({
-						title: "操作成功",
-						duration: 1000, 
-					})
+					// uni.showToast({
+					// 	title: "操作成功",
+					// 	duration: 1000, 
+					// })
 				},
 				fail:(e)=>{
 					uni.showToast({
@@ -181,10 +181,10 @@ export default {
 		submit(e){
 			let that = this
 			console.log(e.content)
-			uni.showToast({
-				title: "服务端待建ing...",
-				duration: 1000,
-			})
+			// uni.showToast({
+			// 	title: "服务端待建ing...",
+			// 	duration: 1000,
+			// })
 		},
 		getTree(arr){
 			let res=[]
@@ -244,7 +244,7 @@ export default {
 				data:httpData,
 				success: (res) => {
 					this.paper = res.data.data
-					console.log(this.paper)
+					// console.log(this.paper)
 					this.commentData.readNumer = this.paper.read_num
 					this.showPageLoading=false
 				}
@@ -258,7 +258,7 @@ export default {
 					this.commentData.comment = this.getTree(res.data.data.discuss)
 					this.commentData.commentSize = this.commentData.comment.length |0
 					// this.commentData.readNumer = this.commentData.commentSize |0
-					console.log(this.commentData)
+					// console.log(this.commentData)
 					this.$forceUpdate()
 					this.showPageLoading=false
 				},
@@ -307,10 +307,10 @@ export default {
 				
 				success: (res) => {
 					
-					uni.showToast({
-						title: "评论成功",
-						duration: 1000, 
-					})
+					// uni.showToast({
+					// 	title: "评论成功",
+					// 	duration: 1000, 
+					// })
 					this.$refs.hbComment.submit = false
 					this.getData()
 				},
@@ -410,7 +410,7 @@ export default {
 						}
 						this.page_index += 1;
 					} else {
-						this.$alert(res.msg);
+						// this.$alert(res.msg);
 					}
 				},
 				complete: res => {
